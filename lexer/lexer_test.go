@@ -3,6 +3,7 @@ package lexer
 import (
   "testing"
   "pupperscript/token"
+  "pupperscript/lexer"
 )
 
 func TestNextToken(t *testing.T) {
@@ -23,7 +24,7 @@ func TestNextToken(t *testing.T) {
     {token.EOF, ""},
   }
 
-  l := New(input)
+  l := lexer.New(input)
 
   for i, tt :=range tests {
     tok := l.NextToken()
