@@ -12,8 +12,10 @@ floof ten = 10;
 
 floof add = boop(x, y) {
   x + y;
-};`
+};
 
+!4 < 9 * 9 > 1/0;
+`
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
@@ -28,7 +30,6 @@ floof add = boop(x, y) {
 		{token.ASSIGN, "="},
 		{token.INT, "10"},
 		{token.SEMICOLON, ";"},
-
 		{token.LET, "floof"},
 		{token.IDENT, "add"},
 		{token.ASSIGN, "="},
@@ -45,6 +46,15 @@ floof add = boop(x, y) {
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.SEMICOLON, ";"},
+		{token.BANG, "!"},
+		{token.INT, "4"},
+		{token.LT, "<"},
+		{token.INT, "9"},
+		{token.ASTERISK, "*"},
+		{token.INT, "9"},
+		{token.GT, ">"},
+		{token.INT, "1"},
+		{token.SLASH, "/"},
 	}
 
 	l := lexer.New(input)
