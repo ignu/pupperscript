@@ -1,7 +1,6 @@
 package lexer
 
 import (
-	"fmt"
 	"pupperscript/token"
 )
 
@@ -57,9 +56,19 @@ func (l *Lexer) NextToken() token.Token {
 	case '}':
 		tok = newToken(token.RBRACE, l.ch)
 	case '<':
-		tok = newToken(token.LT, l.ch)
+		if l.peekChar() == '=' {
+			l.readChar()
+			tok = token.Token{token.LTE, "<="}
+		} else {
+			tok = newToken(token.LT, l.ch)
+		}
 	case '>':
-		tok = newToken(token.GT, l.ch)
+		if l.peekChar() == '=' {
+			l.readChar()
+			tok = token.Token{token.GTE, ">="}
+		} else {
+			tok = newToken(token.GT, l.ch)
+		}
 	case ',':
 		tok = newToken(token.COMMA, l.ch)
 	case ';':
@@ -68,7 +77,6 @@ func (l *Lexer) NextToken() token.Token {
 		tok.Literal = ""
 		tok.Type = token.EOF
 	default:
-		fmt.Printf("%c - \n", l.ch)
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)
@@ -109,6 +117,14 @@ func (l *Lexer) readIdentifier() string {
 func (l *Lexer) skipWhitespace() {
 	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
+	}
+}
+
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.readPosition]
 	}
 }
 

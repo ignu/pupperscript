@@ -25,13 +25,21 @@ const (
 	RBRACE    = "}"
 	LT        = "<"
 	GT        = ">"
+	LTE       = "<="
+	GTE       = ">="
 	LET       = "LET"
 	FUNCTION  = "FUNCTION"
+	IF        = "IF"
+	ELSE      = "ELSE"
+	RETURN    = "RETURN"
 )
 
 var keywords = map[string]TokenType{
 	"boop":  FUNCTION,
 	"floof": LET,
+	"such":  IF,
+	"so":    ELSE,
+	"bork":  RETURN,
 }
 
 func LookupIdent(ident string) TokenType {

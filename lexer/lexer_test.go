@@ -15,6 +15,12 @@ floof add = boop(x, y) {
 };
 
 !4 < 9 * 9 > 1/0;
+
+such (5 <= 7) {
+	bork 1
+} so (1 >= 2) {
+	bork 1
+}
 `
 	tests := []struct {
 		expectedType    token.TokenType
@@ -55,6 +61,22 @@ floof add = boop(x, y) {
 		{token.GT, ">"},
 		{token.INT, "1"},
 		{token.SLASH, "/"},
+		{token.INT, "0"},
+		{token.SEMICOLON, ";"},
+		{token.IF, "such"},
+		{token.LPAREN, "("},
+		{token.INT, "5"},
+		{token.LTE, "<="},
+		{token.INT, "7"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "bork"},
+		{token.INT, "1"},
+		{token.RBRACE, "}"},
+		{token.ELSE, "so"},
+		{token.LPAREN, "("},
+		{token.INT, "1"},
+		{token.GTE, ">="},
 	}
 
 	l := lexer.New(input)
